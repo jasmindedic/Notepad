@@ -4,6 +4,9 @@
 let titles = ["Notiz", "Notiz-2"];
 let notes = ["Deine 1 Notiz :)", "Deine 2 Notiz"];
 
+// Invoke loadNotes function to load and display data from localstorage
+loadNotes()
+
 // Get input elements
 let titleInput = document.querySelector("#titleInput");
 let noteInput = document.querySelector("#noteInput");
@@ -33,8 +36,11 @@ function render() {
             </div>
         `;
     }
-}
 
+    // Invoke saveData function
+    saveNotes();
+
+}
 
 
 // Function to add new notes
@@ -42,6 +48,10 @@ function addNote() {
     // Push each input field in an array index
     titles.push(titleInput.value);
     notes.push(noteInput.value);
+
+    // Remove text from input field after clicking 
+    titleInput.value = "";
+    noteInput.value = "";
 
     render();
 }
@@ -56,6 +66,28 @@ function deleteNote(i) {
 }
 
 // Function to save notes in localstorage
+function saveNotes() {
+    // Convert title array into an JSON string and save into localstorage
+    let titleData = JSON.stringify(titles);
+    localStorage.setItem("title", titleData);
 
+    // Convert note array into an JSON string and save into localstorage
+    let noteData = JSON.stringify(notes);
+    localStorage.setItem("note", noteData);
+
+}
 
 // Function to display notes even after an refresh from localstorage
+function loadNotes() {
+    // Convert JSON string (titles) into an array
+    let titleData = JSON.parse(localStorage.getItem("title"));
+    // Convert JSON string (notes) into an array
+    let noteData = JSON.parse(localStorage.getItem("note"));
+
+
+    if (titleData && noteData) {
+        titles = titleData;
+        notes = noteData;
+    }
+
+}

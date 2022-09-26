@@ -4,13 +4,17 @@
 let titles = ["Notiz", "Notiz-2"];
 let notes = ["Deine 1 Notiz :)", "Deine 2 Notiz"];
 
-// Invoke loadNotes function to load and display data from localstorage
-loadNotes()
-
 // Get input elements
 let titleInput = document.querySelector("#titleInput");
 let noteInput = document.querySelector("#noteInput");
 
+// Function to load onload functions at the same time
+function onLoad() {
+    // Invoke loadNotes function to load data from localstorage
+    loadNotes();
+    // Render some html content
+    render();
+}
 
 // Create render function to display titles and notes
 function render() {
@@ -39,15 +43,19 @@ function render() {
 
     // Invoke saveData function
     saveNotes();
-
 }
 
 
 // Function to add new notes
 function addNote() {
-    // Push each input field in an array index
-    titles.push(titleInput.value);
-    notes.push(noteInput.value);
+    // See if input fields are empty
+    if ((titleInput.value || noteInput.value) == "") {
+        alert("Your fields are empty")
+    } else {
+        // Push each input field in an array index
+        titles.push(titleInput.value);
+        notes.push(noteInput.value);
+    }
 
     // Remove text from input field after clicking 
     titleInput.value = "";
